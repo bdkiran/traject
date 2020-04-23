@@ -1,0 +1,11 @@
+#Server configurations
+server:
+  host: "localhost"
+  port: "8000"
+
+#Database configurations
+database:
+  uri: ""
+  user: ""
+  pass: ""
+ 
