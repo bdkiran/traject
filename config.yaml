@@ -5,7 +5,7 @@ server:
 
 #Database configurations
 database:
-  uri: ""
-  user: ""
-  pass: ""
- 
+  uri:
+  user:
+  pass:
+

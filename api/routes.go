@@ -2,15 +2,15 @@ package api
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/bdkiran/traject/persist"
+	"github.com/bdkiran/traject/utils"
 )
 
 //Simple get enpoint to tell used if the server is alive.
 func alive(w http.ResponseWriter, r *http.Request) {
-	log.Print("Alive function called.")
+	utils.DefaultLogger.Info.Println("Alive function called.")
 	const returnString = "Server is alive."
 	response, _ := json.Marshal(returnString)
 	w.Header().Set("Content-type", "application/json")
@@ -20,16 +20,19 @@ func alive(w http.ResponseWriter, r *http.Request) {
 
 //FormHandler that takes in posts request. The bodies must be url encoded data.
 func formHandler(w http.ResponseWriter, r *http.Request) {
-	log.Print("Form handler called.")
+	utils.DefaultLogger.Info.Println("Form handler called.")
 
 	//Parses form data into a json
 	jsonData, err := formDataToJSONEncoded(r)
 	if err != nil {
-		sendResponse(w, "Invalid Request Sent", http.StatusBadRequest)
+		sendResponse(w, "Invalid Request Sent.", http.StatusBadRequest)
 	}
 	//Json data is then stored indb
-	log.Println(string(jsonData))
-	persist.CreateLead(jsonData)
+	//log.Println(string(jsonData))
+	err = persist.CreateLead(jsonData)
+	if err != nil {
+		sendResponse(w, "Something went wrong.", http.StatusBadRequest)
+	}
 
 	//Send response back
 	sendResponse(w, "Valid Request Sent", http.StatusOK)
@@ -39,6 +42,7 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 func formDataToJSONEncoded(r *http.Request) ([]byte, error) {
 	err := r.ParseForm()
 	if err != nil {
+		utils.DefaultLogger.Warning.Println("Unable to parse the form payload.")
 		return nil, err
 	}
 
@@ -51,6 +55,7 @@ func formDataToJSONEncoded(r *http.Request) ([]byte, error) {
 	//Convert that map to a JSON object
 	newData, err := json.Marshal(mapData)
 	if err != nil {
+		utils.DefaultLogger.Warning.Println("An error occured when converting the map object to a json object.")
 		return nil, err
 	}
 
