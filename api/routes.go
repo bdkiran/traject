@@ -32,6 +32,7 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	err = persist.CreateLead(jsonData)
 	if err != nil {
 		sendResponse(w, "Something went wrong.", http.StatusBadRequest)
+		return
 	}
 
 	//Send response back

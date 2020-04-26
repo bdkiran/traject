@@ -18,7 +18,10 @@ func main() {
 	utils.GetConfigurations(&cfg)
 
 	serveURL := cfg.Server.Host + ":" + cfg.Server.Port
-	utils.DefaultLogger.Info.Println("Staring traject at: http://" + serveURL)
+	port := ":" + cfg.Server.Port
+	utils.DefaultLogger.Info.Println("You can now view form-app in the browser.")
+	utils.DefaultLogger.Info.Println("Local: http://" + serveURL)
+	utils.DefaultLogger.Info.Println("On your network: 10.34.1.131" + port)
 
 	//Create a new connection to mongo.
 	err := persist.InitializeMongo(cfg.Database.URI, cfg.Database.Username, cfg.Database.Password)
@@ -28,5 +31,5 @@ func main() {
 
 	//Initializes all routers and creats a listener
 	router := api.NewRouter()
-	utils.DefaultLogger.Error.Fatal(http.ListenAndServe(serveURL, router))
+	utils.DefaultLogger.Error.Fatal(http.ListenAndServe(port, router))
 }

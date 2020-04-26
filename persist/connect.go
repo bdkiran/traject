@@ -49,6 +49,7 @@ func CreateLead(data []byte) error {
 	insertResult, err := collection.InsertOne(context.TODO(), bdoc)
 	if err != nil {
 		utils.DefaultLogger.Error.Println("An error occured when inserting data in mongoDB")
+		utils.DefaultLogger.Error.Println(err)
 		return err
 	}
 	utils.DefaultLogger.Info.Println("Inserted a single document: ", insertResult.InsertedID)
