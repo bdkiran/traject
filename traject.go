@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/bdkiran/traject/api"
 	"github.com/bdkiran/traject/persist"
@@ -31,5 +32,11 @@ func main() {
 
 	//Initializes all routers and creats a listener
 	router := api.NewRouter()
-	utils.DefaultLogger.Error.Fatal(http.ListenAndServe(port, router))
+	srv := &http.Server{
+		Handler:      router,
+		Addr:         port,
+		ReadTimeout:  10 * time.Second,
+		WriteTimeout: 10 * time.Second,
+	}
+	utils.DefaultLogger.Error.Fatal(srv.ListenAndServe())
 }

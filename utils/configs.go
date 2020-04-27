@@ -16,7 +16,7 @@ type Config struct {
 		URI      string `yaml:"uri"`
 		Username string `yaml:"user"`
 		Password string `yaml:"pass"`
-	}
+	} `yaml:"database"`
 }
 
 //GetConfigurations retries data from the yaml file in the local directory, and builds out a Config struct

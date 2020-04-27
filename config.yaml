@@ -5,7 +5,7 @@ server:
 
 #Database configurations
 database:
-  uri:
-  user:
-  pass:
+  uri: "mongodb://%s:%s@ds111895.mlab.com:11895/wcm_alpha?retryWrites=false"
+  user: "trajectUser"
+  pass: "Welcome123"
 
