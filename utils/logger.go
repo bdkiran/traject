@@ -21,8 +21,7 @@ var DefaultLogger *Logger
 
 //LoggerInit initializes the gloabal logger to be used across the application
 func LoggerInit() {
-
-	fileName := "log.txt"
+	fileName := "app.log"
 	file, err := os.OpenFile(fileName, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalln("Failed to open log file : " + fileName)
