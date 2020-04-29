@@ -1,0 +1,11 @@
+version: '2'
+services:
+    traject-app:
+        restart: always
+        build:
+            dockerfile: Dockerfile
+            context: .
+        environment:
+            - VIRTUAL_HOST=westcoastmedia.io
+            - LETSENCRYPT_HOST=westcoastmedia.io
+        network_mode: bridge

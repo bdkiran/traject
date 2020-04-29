@@ -30,7 +30,7 @@ COPY --from=builder /app/config.yaml .
 COPY --from=builder /app/main .
 
 # This container exposes port 8080 to the outside world
-EXPOSE 8080
+EXPOSE 80
 
 # Run the binary program produced by `go install`
-CMD ["./main"]
+ENTRYPOINT ["./main"] --port 80
