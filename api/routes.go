@@ -4,14 +4,14 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/bdkiran/traject/persist"
 	"github.com/bdkiran/traject/utils"
 )
 
 //Simple get enpoint to tell used if the server is alive.
 func alive(w http.ResponseWriter, r *http.Request) {
-	utils.DefaultLogger.Info.Println("Alive function called.")
-	const returnString = "Server is alive."
+	utils.DefaultLogger.Info.Println("Home endpoint called")
+	//persist.ProduceMessage()
+	const returnString = "Message sent to kafka"
 	response, _ := json.Marshal(returnString)
 	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusOK)
@@ -23,24 +23,24 @@ func formHandler(w http.ResponseWriter, r *http.Request) {
 	utils.DefaultLogger.Info.Println("Form handler called.")
 
 	//Parses form data into a json
-	jsonData, err := formDataToJSONEncoded(r)
+	jsonData, err := parseURLEncodedDataToJSONEncoded(r)
 	if err != nil {
 		sendResponse(w, "Invalid Request Sent.", http.StatusBadRequest)
 	}
 	//Json data is then stored indb
-	//log.Println(string(jsonData))
-	err = persist.CreateLead(jsonData)
-	if err != nil {
-		sendResponse(w, "Something went wrong.", http.StatusBadRequest)
-		return
-	}
+	utils.DefaultLogger.Info.Println(string(jsonData))
+	//err = persist.CreateLead(jsonData)
+	// if err != nil {
+	// 	sendResponse(w, "Something went wrong.", http.StatusBadRequest)
+	// 	return
+	// }
 
 	//Send response back
 	sendResponse(w, "Valid Request Sent", http.StatusOK)
 }
 
 //Converst url-encoded form data from an http request to a json object.
-func formDataToJSONEncoded(r *http.Request) ([]byte, error) {
+func parseURLEncodedDataToJSONEncoded(r *http.Request) ([]byte, error) {
 	err := r.ParseForm()
 	if err != nil {
 		utils.DefaultLogger.Warning.Println("Unable to parse the form payload.")

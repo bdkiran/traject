@@ -1,11 +1,14 @@
 #Server configurations
 server:
-  host: "localhost"
-  port: "80"
+  port: "8080"
+
+#kafka configurations
+kafka:
+  bootstrapServer: "localhost:9094"
 
 #Database configurations
 database:
-  uri: "mongodb://%s:%s@ds111895.mlab.com:11895/wcm_alpha?retryWrites=false"
-  user: "trajectUser"
-  pass: "Welcome123"
+  uri: ""
+  user: ""
+  pass: ""
 

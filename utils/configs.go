@@ -10,8 +10,10 @@ import (
 type Config struct {
 	Server struct {
 		Port string `yaml:"port"`
-		Host string `yaml:"host"`
 	} `yaml:"server"`
+	Kafka struct {
+		BootstrapServer string `yaml:"bootstrapServer"`
+	} `yaml:"kafka"`
 	Database struct {
 		URI      string `yaml:"uri"`
 		Username string `yaml:"user"`
